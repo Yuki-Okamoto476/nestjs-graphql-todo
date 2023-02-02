@@ -15,5 +15,11 @@ type Query {
 }
 
 type Mutation {
-  createTask(name: String!, dueDate: String!, description: String): Task!
+  createTask(createTaskInput: CreateTaskInput!): Task!
+}
+
+input CreateTaskInput {
+  name: String!
+  dueDate: String!
+  description: String
 }
