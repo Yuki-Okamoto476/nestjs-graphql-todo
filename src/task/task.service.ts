@@ -1,26 +1,24 @@
 import { Injectable } from '@nestjs/common';
-import { CreateTaskInput } from './dto/CreateTask.input';
-import { Task } from './models/task.model';
+import { Task } from '@prisma/client';
+import { PrismaService } from 'src/prisma/prisma.service';
+import { CreateTaskInput } from './dto/createTask.input';
 
 @Injectable()
 export class TaskService {
-  tasks: Task[] = [];
+  constructor(private readonly prismaService: PrismaService) {}
 
-  getTasks(): Task[] {
-    return this.tasks;
+  async getTasks(): Promise<Task[]> {
+    return await this.prismaService.task.findMany();
   }
 
-  createTask(createTaskInput: CreateTaskInput): Task {
+  async createTask(createTaskInput: CreateTaskInput): Promise<Task> {
     const { name, dueDate, description } = createTaskInput;
-    const newTask = new Task();
-    newTask.id = this.tasks.length + 1;
-    newTask.name = name;
-    newTask.dueDate = dueDate;
-    newTask.status = 'NOT_STARTED';
-    newTask.description = description;
-
-    this.tasks.push(newTask);
-
-    return newTask;
+    return await this.prismaService.task.create({
+      data: {
+        name,
+        dueDate,
+        description,
+      },
+    });
   }
 }
