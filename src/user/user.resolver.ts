@@ -1,5 +1,7 @@
+import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { User } from '@prisma/client';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { CreateUserInput } from './dto/createUser.input';
 import { GetUserArgs } from './dto/getUser.args';
 import { User as UserModel } from './models/user.model';
@@ -17,6 +19,7 @@ export class UserResolver {
   }
 
   @Query(() => UserModel, { nullable: true })
+  @UseGuards(JwtAuthGuard)
   async getUser(@Args() getUserArgs: GetUserArgs): Promise<User> {
     return await this.userService.getUser(getUserArgs.email);
   }
