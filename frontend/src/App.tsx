@@ -1,12 +1,21 @@
-import './App.css'
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import './App.css';
+import Main from './components/main';
+import NotFound from './components/NotFound';
+import SignIn from './components/SignIn';
+import SignUp from './components/SignUp';
 
 function App() {
-
   return (
-    <div className="App">
-      <h1>Hello World</h1>
-    </div>
-  )
+    <BrowserRouter>
+      <Routes>
+        <Route path='/signin' element={<SignIn />} />
+        <Route path='/signup' element={<SignUp />} />
+        <Route path='/' element={<Main />} />
+        <Route path='*' element={<NotFound />} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;
