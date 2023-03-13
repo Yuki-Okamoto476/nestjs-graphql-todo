@@ -10,18 +10,38 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useState } from 'react';
+import { useMutation } from '@apollo/client';
+import { SIGN_IN } from '../mutations/authMutations';
+import { SignInResponse } from '../types/signInResponse';
+import { useNavigate } from 'react-router-dom';
 
 const theme = createTheme();
 
 export default function SignIn() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const [failSignIn, setFailSignIn] = useState(false);
+  const [signIn] = useMutation<SignInResponse>(SIGN_IN);
+  const navigate = useNavigate();
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log({
-      email,
-      password
-    });
+    const signInInput = { email, password };
+    try {
+      const result = await signIn({
+        variables: { signInInput },
+      });
+      if (result.data)
+        localStorage.setItem('token', result.data.signIn.accessToken);
+      localStorage.getItem('token') && navigate('/');
+    } catch (error: any) {
+      if (error.message === 'Unauthorized') {
+        setFailSignIn(true);
+        return;
+      }
+      console.log(error.message);
+      alert('予期せぬエラーが発生しました');
+    }
   };
 
   return (
@@ -70,8 +90,13 @@ export default function SignIn() {
               id='password'
               autoComplete='current-password'
               value={password}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => setPassword(e.target.value)}
             />
+            {failSignIn && (
+              <Typography color={'red'}>
+                メールアドレスまたはパスワードを確認してください。
+              </Typography>
+            )}
             <Button
               type='submit'
               fullWidth
