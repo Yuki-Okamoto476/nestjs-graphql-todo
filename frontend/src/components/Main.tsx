@@ -4,9 +4,9 @@ import jwtDecode from 'jwt-decode';
 import { GET_TASKS } from '../queries/taskQueries';
 import { Payload } from '../types/payload';
 import { Task } from '../types/task';
-import Header from './Header';
+import { Header } from './Header';
 import Loading from './Loading';
-import TaskTable from './TaskTable';
+import { TaskTable } from './TaskTable';
 
 const Main = () => {
   const token = localStorage.getItem('token');

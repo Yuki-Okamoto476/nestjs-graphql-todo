@@ -12,7 +12,7 @@ type TaskTableProps = {
   userId: number;
 };
 
-export default function TaskTable({ tasks, userId }: TaskTableProps) {
+export const TaskTable: React.FC<TaskTableProps> = ({ tasks, userId }) => {
   return (
     <TableContainer component={Paper} sx={{ width: '80%', m: 'auto' }}>
       <Table sx={{ minWidth: 650 }} aria-label='simple table'>
