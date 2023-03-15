@@ -4,6 +4,7 @@ import jwtDecode from 'jwt-decode';
 import { GET_TASKS } from '../queries/taskQueries';
 import { Payload } from '../types/payload';
 import { Task } from '../types/task';
+import { AddTask } from './AddTask';
 import { Header } from './Header';
 import Loading from './Loading';
 import { TaskTable } from './TaskTable';
@@ -22,7 +23,12 @@ const Main = () => {
       <Stack spacing={4} direction='column' m={8} alignItems='center'>
         {loading && <Loading />}
         {error && <Typography color='red'>エラーが発生しました</Typography>}
-        {!loading && !error && <TaskTable tasks={data?.getTasks} userId={userId}/>}
+        {!loading && !error && (
+          <>
+            <AddTask userId={userId} />
+            <TaskTable tasks={data?.getTasks} userId={userId} />
+          </>
+        )}
       </Stack>
     </>
   );
