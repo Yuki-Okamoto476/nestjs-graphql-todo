@@ -6,6 +6,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Task } from '../types/task';
+import { EditTask } from './EditTask';
 
 type TaskTableProps = {
   tasks?: Task[];
@@ -25,21 +26,23 @@ export const TaskTable: React.FC<TaskTableProps> = ({ tasks, userId }) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {tasks?.map(({ id, name, dueDate, status}) => (
+          {tasks?.map((task) => (
             <TableRow
-              key={id}
+              key={task.id}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell component='th' scope='row'>
-                {name}
+                {task.name}
               </TableCell>
-              <TableCell align='right'>{dueDate}</TableCell>
-              <TableCell align='right'>{status}</TableCell>
-              <TableCell align='right'></TableCell>
+              <TableCell align='right'>{task.dueDate}</TableCell>
+              <TableCell align='right'>{task.status}</TableCell>
+              <TableCell align='right'>
+                <EditTask task={task} userId={userId} />
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
     </TableContainer>
   );
-}
+};
