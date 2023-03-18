@@ -4,10 +4,10 @@ import jwtDecode from 'jwt-decode';
 import { GET_TASKS } from '../queries/taskQueries';
 import { Payload } from '../types/payload';
 import { Task } from '../types/task';
-import { AddTask } from './AddTask';
-import { Header } from './Header';
-import Loading from './Loading';
-import { TaskTable } from './TaskTable';
+import { AddTask } from '../components/AddTask';
+import { Header } from '../components/Header/Header';
+import Loading from '../components/Loading';
+import { TaskTable } from '../components/TaskTable';
 
 const Main = () => {
   const token = localStorage.getItem('token');
