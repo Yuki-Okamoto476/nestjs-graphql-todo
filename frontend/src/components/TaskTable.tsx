@@ -22,9 +22,9 @@ export const TaskTable: React.FC<TaskTableProps> = ({ tasks, userId }) => {
         <TableHead>
           <TableRow>
             <TableCell>Task Name</TableCell>
-            <TableCell align='right'>Due Date</TableCell>
-            <TableCell align='right'>Status</TableCell>
-            <TableCell align='right'></TableCell>
+            <TableCell>Due Date</TableCell>
+            <TableCell>Status</TableCell>
+            <TableCell></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -36,9 +36,9 @@ export const TaskTable: React.FC<TaskTableProps> = ({ tasks, userId }) => {
               <TableCell component='th' scope='row'>
                 {task.name}
               </TableCell>
-              <TableCell align='right'>{task.dueDate}</TableCell>
-              <TableCell align='right'>{task.status}</TableCell>
-              <TableCell align='right'>
+              <TableCell>{task.dueDate}</TableCell>
+              <TableCell>{task.status}</TableCell>
+              <TableCell>
                 <Stack spacing={2} direction='row' justifyContent='flex-end'>
                   <EditTask task={task} userId={userId} />
                   <DeleteTask id={task.id} userId={userId}/>
